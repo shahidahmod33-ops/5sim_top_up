@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MI TEAM | SECURE ACCESS</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body {
+            background: #000;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            color: #fff;
+        }
+        /* Background animation */
+        .bg-glow {
+            position: absolute; width: 300px; height: 300px;
+            background: rgba(255, 0, 0, 0.2);
+            filter: blur(100px); border-radius: 50%; z-index: 0;
+        }
+        .login-card {
+            position: relative; z-index: 1;
+            width: 90%; max-width: 400px;
+            padding: 40px 30px;
+            background: rgba(20, 20, 20, 0.9);
+            border: 1px solid #ff0000;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
+        }
+        .logo { font-size: 50px; color: #ff0000; margin-bottom: 15px; }
+        h2 { font-size: 24px; letter-spacing: 2px; margin-bottom: 10px; text-transform: uppercase; }
+        p { color: #888; font-size: 14px; margin-bottom: 30px; }
+        
+        .input-group { position: relative; margin-bottom: 25px; }
+        .input-group i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #ff0000; }
+        input {
+            width: 100%; padding: 15px 15px 15px 45px;
+            background: #111; border: 1px solid #333;
+            border-radius: 10px; color: #fff; outline: none;
+            transition: 0.3s;
+        }
+        input:focus { border-color: #ff0000; box-shadow: 0 0 10px rgba(255, 0, 0, 0.2); }
+        
+        button {
+            width: 100%; padding: 15px;
+            background: linear-gradient(45deg, #ff0000, #990000);
+            border: none; border-radius: 10px; color: #fff;
+            font-size: 16px; font-weight: bold; cursor: pointer;
+            text-transform: uppercase; transition: 0.3s;
+        }
+        button:hover { transform: scale(1.02); box-shadow: 0 5px 15px rgba(255, 0, 0, 0.4); }
+        
+        .footer { margin-top: 20px; font-size: 12px; color: #555; }
+    </style>
+</head>
+<body>
+
+<div class="bg-glow"></div>
+
+<div class="login-card">
+    <div class="logo"><i class="fas fa-user-shield"></i></div>
+    <h2>MI TEAM ACCESS</h2>
+    <p>Enter your secret key to unlock the server</p>
+    
+    <div class="input-group">
+        <i class="fas fa-key"></i>
+        <input type="password" id="passkey" placeholder="Enter Access Key...">
+    </div>
+    
+    <button onclick="checkAccess()">Unlock Now</button>
+    
+    <div class="footer">
+        Developed by Shahid Khan | Mi Team Owner
+    </div>
+</div>
+
+<script>
+    function checkAccess() {
+        const userKey = document.getElementById('passkey').value;
+        
+        // --- আপনার সেটিংস এখানে পরিবর্তন করুন ---
+        const SECRET_KEY = "SHAHID786"; // আপনার পাসওয়ার্ড
+        const REDIRECT_TO = "https://ariyan.online/rx.aviator.rafi.php"; // পাসওয়ার্ড সঠিক হলে এই লিঙ্কে যাবে
+        // ------------------------------------
+
+        if (userKey === SECRET_KEY) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Access Granted!',
+                text: 'Redirecting to secure server...',
+                timer: 2000,
+                background: '#111',
+                color: '#fff',
+                showConfirmButton: false,
+                didOpen: () => { Swal.showLoading(); }
+            }).then(() => {
+                window.location.href = REDIRECT_TO;
+            });
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Access Denied!',
+                text: 'Invalid key. Please contact admin.',
+                background: '#111',
+                color: '#fff',
+                confirmButtonColor: '#ff0000'
+            });
+        }
+    }
+</script>
+
+</body>
+</html>
